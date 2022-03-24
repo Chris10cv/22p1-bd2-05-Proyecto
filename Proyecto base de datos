@@ -3,3 +3,15 @@ Grupo # 5
 Caterin Lizeth Barahona Cruz  202101332
 Marcos Rene Avila Carrillo   202002177
 christopher Alexander Carcamo Valle 202100349
+
+
+select * from bd_platvideo.tbl_cartera;
+select * from bd_platvideo.tbl_cat_prods;
+select * from bd_platvideo.tbl_catalogo;
+select * from bd_platvideo.tbl_ciclos_facturacion;
+select * from bd_platvideo.tbl_fact_cargos;
+select * from bd_platvideo.tbl_fact_detalle;
+select * from bd_platvideo.tbl_fact_resumen;
+select * from bd_platvideo.tbl_productos;
+select * from bd_platvideo.tbl_suscriptores;
+select * from bd_platvideo.tbl_tarifas;
