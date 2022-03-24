@@ -16,7 +16,159 @@ select * from bd_platvideo.tbl_productos;
 select * from bd_platvideo.tbl_suscriptores;
 select * from bd_platvideo.tbl_tarifas;
 
+# 1.- FUNCIONES ALMACENADAS
 
+#---CREACION DE FUNCIONES-----------------------------------------------------------------------------------------------
+
+
+#-------  FUNNCION TABLA TARIFAS
+
+#----------  PARA VALOR REAL
+
+drop function bd_platvideo.FUNCION_VALOR_REAL ;
+
+delimiter //
+CREATE FUNCTION bd_platvideo.FUNCION_VALOR_REAL (
+V_ID_TARIFA DECIMAL(12,2)
+
+)  RETURNS varchar(12) deterministic
+ 
+BEGIN  
+  DECLARE V_ID_TARIFA_VR DECIMAL(12,2);
+
+   SET V_ID_TARIFA_VR =  ( SELECT valor_real FROM tbl_tarifas WHERE id_tarifa = V_ID_TARIFA);
+
+ RETURN V_ID_TARIFA_VR;
+END;  
+
+   SELECT bd_platvideo.FUNCION_VALOR_REAL(4) 'VALOR_REAL' ;
+   
+
+#--------------------------PARA VALOR PORCENTUAL
+
+drop function bd_platvideo.FUNCION_VALOR_PORC ;
+
+delimiter //
+CREATE FUNCTION bd_platvideo.FUNCION_VALOR_PORC (
+V_ID_TARIFA DECIMAL(12,2)
+
+)  RETURNS varchar(12) deterministic
+ 
+BEGIN  
+  DECLARE V_ID_TARIFA_VP DECIMAL(12,2);
+
+   SET V_ID_TARIFA_VP =  ( SELECT valor_procentual FROM tbl_tarifas WHERE id_tarifa = V_ID_TARIFA);
+
+ RETURN V_ID_TARIFA_VP;
+END;  
+
+   SELECT bd_platvideo.FUNCION_VALOR_PORC(4) 'VALOR_PORCENTUAL'
+   
+   
+   
+   #eliminar procedimiento
+DROP procedure IF EXISTS bd_platvideo.proc_factura;
+
+		# Crear procedimiento 
+DELIMITER //
+create procedure bd_platvideo.proc_factura (
+in p_idorden int,
+in p_id_cat int,
+in p_id_suscriptor int
+
+)
+
+begin 
+
+		#definir variables 
+declare v_idorden int default 0;
+declare v_id_cat int default 0;
+declare v_id_suscriptor int default 0;
+declare v_id_factura int default 0;
+declare v_id_cargo int default 0;
+declare v_titulo varchar (45);
+
+declare v_descripcion varchar (50);
+declare v_costo decimal (12,2);
+declare v_precio_venta decimal (12,2);
+declare v_fecha_inicio datetime;
+declare v_fecha_fin datetime;
+
+
+		#asignar valores de parametros a variables 
+set  v_idorden  = p_idorden;
+set  v_id_cat   = p_id_cat;
+set  v_id_suscriptor = p_id_suscriptor;
+
+select precio_venta into v_precio_venta  
+	from bd_platvideo.tbl_catalogo
+	where id_cat = v_id_cat; 
+    
+insert bd_platvideo.tbl_cartera  (
+v_id_cat,v_titulo,v_descripcion,v_costo,v_precio_venta,v_fecha_inicio,v_fecha_fin
+)values(
+id_cat,titulo,descripcion,costo,precio_venta,fecha_inicio,fecha_fin
+);
+
+
+commit;
+end;
+   
+   
+   
+  # 2.- Procedimientos almacenados:
+   
+   #eliminar procedimiento
+DROP procedure IF EXISTS bd_platvideo.proc_factura;
+
+		# Crear procedimiento 
+DELIMITER //
+create procedure bd_platvideo.proc_factura (
+in p_idorden int,
+in p_id_cat int,
+in p_id_suscriptor int
+
+)
+
+begin 
+
+		#definir variables 
+declare v_idorden int default 0;
+declare v_id_cat int default 0;
+declare v_id_suscriptor int default 0;
+declare v_id_factura int default 0;
+declare v_id_cargo int default 0;
+declare v_titulo varchar (45);
+
+declare v_descripcion varchar (50);
+declare v_costo decimal (12,2);
+declare v_precio_venta decimal (12,2);
+declare v_fecha_inicio datetime;
+declare v_fecha_fin datetime;
+
+
+		#asignar valores de parametros a variables 
+set  v_idorden  = p_idorden;
+set  v_id_cat   = p_id_cat;
+set  v_id_suscriptor = p_id_suscriptor;
+
+select precio_venta into v_precio_venta  
+	from bd_platvideo.tbl_catalogo
+	where id_cat = v_id_cat; 
+    
+insert bd_platvideo.tbl_cartera  (
+v_id_cat,v_titulo,v_descripcion,v_costo,v_precio_venta,v_fecha_inicio,v_fecha_fin
+)values(
+id_cat,titulo,descripcion,costo,precio_venta,fecha_inicio,fecha_fin
+);
+
+
+
+
+
+commit;
+end;
+   
 
 /*   
    
