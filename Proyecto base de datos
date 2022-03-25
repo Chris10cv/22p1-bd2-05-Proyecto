@@ -262,3 +262,6 @@ set v_fecha_final = (select date_add(v_fecha_inicio, INTERVAL 20 DAY));
 commit;
 
 END;
+
+
+3
